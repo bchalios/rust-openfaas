@@ -9,3 +9,6 @@ edition = "2018"
 [dependencies]
 openfaas-runtime = { path = "../openfaas-runtime" }
 tokio = { version = "1", features = ["full"] }
+log = "0.4"
+env_logger = "0.9"
+serde_json = "^1"
