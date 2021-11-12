@@ -6,7 +6,6 @@ WORKDIR /home/rust
 
 # Copy all the sources
 COPY function ./function
-COPY openfaas-runtime ./openfaas-runtime
 
 # Useful when we are working with Cargo workspaces
 # and we need to define which binary implements our
