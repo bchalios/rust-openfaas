@@ -11,7 +11,7 @@ The motivation for this template is that the existing
 does not allow the creation of functions with state that can be shared
 across invocations.
 
-The template defines `openfaas-runtime`, a lib crate that wraps `hyper`
+The template uses `openfaas-runtime`, a lib crate that wraps `hyper`
 and exposes a public function `openfaas_runtime::run` for launching the
 service that will handle user requests.
 
