@@ -1,4 +1,5 @@
 extern crate openfaas_runtime;
+use openfaas_runtime::Error;
 
 use log::debug;
 use std::sync::Arc;
@@ -22,7 +23,7 @@ impl Greeter {
     }
 }
 
-fn handler(req: serde_json::Value, greeter: Arc<Greeter>) -> String {
+async fn handler(req: serde_json::Value, greeter: Arc<Greeter>) -> Result<String, String> {
     debug!("Received request: {}", req);
 
     let response = if req["name"].is_string() {
@@ -32,11 +33,11 @@ fn handler(req: serde_json::Value, greeter: Arc<Greeter>) -> String {
     };
     debug!("Responding: {}", response);
 
-    response
+    Ok(response)
 }
 
 #[tokio::main]
-async fn main() {
+async fn main() -> Result<(), Error> {
     env_logger::init();
 
     // Create the object that will be shared across invocation calls
@@ -44,7 +45,8 @@ async fn main() {
 
     // Define our handler closure.
     //
-    // The runtime expects an `FnOnce(serde_json::Value) -> Resp where Resp: Serialize`.
+    // The runtime expects an `FnOnce(serde_json::Value) -> Future<Output=Result<Resp, Into<Error>>>
+    // where Resp: Serialize`.
     //
     // So what we do here is create a closure with this type
     // which captures the a reference to the Greeter object
@@ -53,5 +55,7 @@ async fn main() {
     let handler = move |req: serde_json::Value| handler(req, greeter.clone());
 
     // Invoke the runtime
-    openfaas_runtime::run(handler).await;
+    openfaas_runtime::run(handler).await?;
+
+    Ok(())
 }

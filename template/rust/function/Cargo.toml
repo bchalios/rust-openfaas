@@ -7,7 +7,7 @@ edition = "2018"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-openfaas-runtime = { git = "https://github.com/bchalios/openfaas-runtime", tag = "v0.1.0" }
+openfaas-runtime = { git = "https://github.com/bchalios/openfaas-runtime", tag = "v0.2.0" }
 tokio = { version = "1", features = ["full"] }
 log = "0.4"
 env_logger = "0.9"
